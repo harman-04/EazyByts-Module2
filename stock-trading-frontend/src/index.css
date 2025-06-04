@@ -1,0 +1,63 @@
+/* src/index.css */
+
+/* Import Google Fonts for Inter.
+   It's good practice to also include this in your public/index.html <head>
+   for better performance and to ensure the font loads before CSS parsing. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/*
+   Tailwind CSS v4.x: Define your theme tokens directly using @theme.
+   These tokens will be exposed as CSS variables (e.g., --color-primary, --font-inter).
+   In v4.0, content detection is largely automatic, so you don't typically need a 'content' array here.
+   If Tailwind doesn't find your classes automatically, you might need to add `@source` directives
+   for specific directories (e.g., @source "../node_modules/@my-company/ui-lib";)
+*/
+@theme {
+  /* Define your custom font family as a CSS variable */
+  --font-inter: 'Inter', 'sans-serif';
+
+  /* Define your custom color palette as CSS variables */
+  --color-primary: '#6366F1';
+  --color-primary-dark: '#4F46E5';
+  --color-secondary : '#10B981';
+  --color-secondary-dark: '#059669';
+  --color-background-dark: '#1F2937';
+  --color-background-dark_lighter: '#2D3748'; /* Added this variable definition */
+  --color-background-light : '#374151';
+  --color-text-dark: '#F9FAFB';
+  --color-text-dark_secondary: '#D1D5DB';
+  --color-border-dark: '#4B5563';
+  --color-error-red: '#EF4444';
+  --color-success-green: '#22C55E';
+}
+
+/* Import Tailwind CSS. This is crucial and MUST be placed AFTER the @theme block.
+   Tailwind will generate all its utility classes based on the theme variables defined above. */
+@import "tailwindcss";
+
+/* Base styling for focus rings to ensure accessibility.
+   Using the CSS variable directly for consistency. */
+*:focus-visible {
+  outline: 2px solid var(--color-primary); /* Using CSS variable */
+  outline-offset: 2px;
+}
+
+/* Custom Scrollbar for Webkit browsers (Chrome, Safari) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #1F2937; /* Gray 800 */
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #4B5563; /* Gray 600 */
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #6B7280; /* Gray 500 */
+}
