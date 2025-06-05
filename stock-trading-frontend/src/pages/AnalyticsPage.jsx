@@ -89,16 +89,6 @@ const AnalyticsPage = () => {
     // Let's assume currentPortfolio.cashBalance is the most up-to-date and apply transactions backward.
     // However, for charting, it's often easier to build forward from a known start.
 
-    // Let's assume a simplified scenario: start with the current cash and work backward.
-    // Or, more robustly: Start with the portfolio's cash balance when it was created.
-    // If your `portfolioResponse.data.cashBalance` is current cash, we need to calculate
-    // the cash balance at `createdAt`.
-
-    // Simpler: Just track the current cash balance and plot its evolution
-    // using the *current* cash balance as a starting point and reversing transactions
-    // OR, start from the initial cash balance and apply transactions chronologically.
-    // Given `currentPortfolio.cashBalance` is the LATEST, we should calculate historical points.
-
     // Let's start with the current cash and work backward to get the initial cash balance for the chart.
     // And then build the chart forward from the initial cash.
 
@@ -236,12 +226,12 @@ const AnalyticsPage = () => {
 
           {/* Historical Cash Balance Chart */}
           <div
-            className="mb-8 p-6 bg-gray-800 rounded-lg shadow-md border border-gray-700"
+            className="mb-8 p-6 bg-gray-800 rounded-lg shadow-md border border-gray-700 flex-grow overflow-hidden" // Added flex-grow and overflow-hidden
             aria-label="Historical Cash Balance Chart"
           >
             <h3 className="text-xl font-semibold text-primary mb-4">Historical Cash Balance</h3>
             {chartData.length > 1 ? (
-              <ResponsiveContainer width="100%" height={400}>
+              <ResponsiveContainer width="100%" height="100%"> {/* Set height to 100% */}
                 <LineChart
                   data={chartData}
                   margin={{ top: 5, right: 30, left: 20, bottom: 5 }}

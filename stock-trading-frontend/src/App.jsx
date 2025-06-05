@@ -1,16 +1,18 @@
-// App.jsx
+// src/App.jsx
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import AuthPage from './pages/AuthPage';
 import DashboardPage from './pages/DashboardPage';
-import TradePage from './pages/TradePage'; // Import the new TradePage
-import PortfolioPage from './pages/PortfolioPage'; // Import the new PortfolioPage
-import Layout from './components/Layout/Layout';
-import authService from './services/auth.service';
+import TradePage from './pages/TradePage';
+import PortfolioPage from './pages/PortfolioPage';
 import ChatPage from './pages/ChatPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import EducationPage from './pages/EducationPage';
 import ProfilePage from './pages/ProfilePage';
+import HomePage from './pages/HomePage'; // Import the new HomePage
+import Layout from './components/Layout/Layout';
+import authService from './services/auth.service';
+
 /**
  * Main application component.
  * Manages user authentication state and conditionally renders content based on authentication status.
@@ -40,12 +42,12 @@ function App() {
 
   /**
    * Handles user logout.
-   * Clears user data, sets currentUser to undefined, and navigates back to auth page.
+   * Clears user data, sets currentUser to undefined, and navigates back to the home page.
    */
   const handleLogout = () => {
     authService.logout();
     setCurrentUser(undefined);
-    navigate('/'); // Navigate back to authentication page after logout
+    navigate('/'); // Navigate back to home page after logout
   };
 
   return (
@@ -53,74 +55,29 @@ function App() {
       {/* Conditional rendering based on authentication status */}
       {currentUser ? (
         // Authenticated user layout with navigation
-        <Routes>
-          <Route
-            path="/dashboard"
-            element={
-              <Layout onLogout={handleLogout} username={currentUser.username}>
-                <DashboardPage />
-              </Layout>
-            }
-          />
-          <Route
-            path="/trade" // New Trade Route
-            element={
-              <Layout onLogout={handleLogout} username={currentUser.username}>
-                <TradePage />
-              </Layout>
-            }
-          />
-          <Route
-            path="/portfolio" // New Portfolio Route
-            element={
-              <Layout onLogout={handleLogout} username={currentUser.username}>
-                <PortfolioPage />
-              </Layout>
-            }
-          />
-          <Route
-            path="/chat"
-            element={
-              <Layout onLogout={handleLogout} username={currentUser.username}>
-                <ChatPage />
-              </Layout>
-            }
-          />
-           <Route
-            path="/analytics" // NEW Analytics Route
-            element={
-              <Layout onLogout={handleLogout} username={currentUser.username}>
-                <AnalyticsPage />
-              </Layout>
-            }
-          />
-          <Route
-            path="/education" // NEW Education Route
-            element={
-              <Layout onLogout={handleLogout} username={currentUser.username}>
-                <EducationPage />
-              </Layout>
-            }
-          />
-           <Route
-            path="/profile" // NEW Profile Route
-            element={
-              <Layout onLogout={handleLogout} username={currentUser.username}>
-                <ProfilePage />
-              </Layout>
-            }
-          />
-          {/* Future routes for Chat, Analytics, Education, etc. will go here */}
-          {/* Default route for authenticated users - redirects to dashboard if already logged in */}
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
-        </Routes>
+        <Layout onLogout={handleLogout} username={currentUser.username} isLoggedIn={!!currentUser}>
+          <Routes>
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/trade" element={<TradePage />} />
+            <Route path="/portfolio" element={<PortfolioPage />} />
+            <Route path="/chat" element={<ChatPage />} />
+            <Route path="/analytics" element={<AnalyticsPage />} />
+            <Route path="/education" element={<EducationPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            {/* Redirect any other path to dashboard for logged-in users */}
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Routes>
+        </Layout>
       ) : (
-        // Unauthenticated user: show authentication page
-        <Routes>
-          <Route path="/" element={<AuthPage onAuthSuccess={handleAuthSuccess} />} />
-          {/* Redirect any other path to auth */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+        // Unauthenticated user: show public layout or direct auth page
+        <Layout isLoggedIn={!!currentUser}> {/* Pass isLoggedIn as false */}
+          <Routes>
+            <Route path="/" element={<HomePage />} /> {/* Default Home Page */}
+            <Route path="/auth" element={<AuthPage onAuthSuccess={handleAuthSuccess} />} />
+            {/* Redirect any other path to home for unauthenticated users */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Layout>
       )}
     </>
   );

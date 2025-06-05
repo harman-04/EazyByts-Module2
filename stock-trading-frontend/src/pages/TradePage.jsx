@@ -245,41 +245,39 @@ const TradePage = () => {
   };
 
   return (
-    // Example of directly using a CSS variable for background color
-    // This overrides the Tailwind 'bg-background-dark_lighter' for demonstration.
-    // In most cases, sticking to Tailwind classes is preferred.
-    <div className="p-6 rounded-lg shadow-lg" style={{ backgroundColor: 'var(--color-background-dark_lighter)' }}>
-      <h2 className="text-3xl font-bold text-primary mb-6 text-center">
+    // Replaced 'bg-background-dark_lighter' with 'bg-gray-800' directly
+    <div className="p-6 rounded-lg shadow-lg bg-gray-800">
+      <h2 className="text-3xl font-bold text-[#4ade80] mb-6 text-center"> {/* Replaced text-primary with text-[#4ade80] */}
         Place a Trade
       </h2>
 
       {message && (
-        <div className={`p-3 rounded-md mb-4 text-center ${message.includes('Error') || message.includes('failed') ? 'bg-error-red' : 'bg-success-green'} text-white`}>
+        <div className={`p-3 rounded-md mb-4 text-center ${message.includes('Error') || message.includes('failed') ? 'bg-[#ef4444]' : 'bg-[#22c55e]'} text-white`}> {/* Replaced bg-error-red and bg-success-green with hex codes */}
           {message}
         </div>
       )}
 
-      <div className="text-center text-text-dark_secondary mb-4">
+      <div className="text-center text-gray-400 mb-4"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
         WebSocket Status: <span className={`font-semibold ${wsStatus === 'Connected' ? 'text-green-500' : 'text-yellow-500'}`}>
           {wsStatus}
         </span>
       </div>
 
       {/* Stock Search Section */}
-      <div className="mb-8 p-6 bg-background-light rounded-lg shadow-md border border-border-dark">
-        <h3 className="text-xl font-semibold text-primary mb-4">Search Stock</h3>
+      <div className="mb-8 p-6 bg-gray-700 rounded-lg shadow-md border border-gray-600"> {/* Replaced bg-background-light and border-border-dark with gray shades */}
+        <h3 className="text-xl font-semibold text-[#4ade80] mb-4">Search Stock</h3> {/* Replaced text-primary with text-[#4ade80] */}
         <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-4">
           <input
             type="text"
             placeholder="Enter stock symbol (e.g., AAPL)"
-            className="flex-grow px-4 py-2 rounded-md border border-border-dark bg-gray-700 text-text-dark focus:outline-none focus:ring-primary-dark focus:border-primary-dark transition duration-200"
+            className="flex-grow px-4 py-2 rounded-md border border-gray-600 bg-gray-700 text-gray-200 focus:outline-none focus:ring-[#22c55e] focus:border-[#22c55e] transition duration-200" 
             value={searchSymbol}
             onChange={(e) => setSearchSymbol(e.target.value)}
             required
           />
           <button
             type="submit"
-            className="px-6 py-2 bg-primary text-white rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-md transition duration-200"
+            className="px-6 py-2 bg-[#4ade80] text-white rounded-md hover:bg-[#22c55e] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4ade80] shadow-md transition duration-200" 
             disabled={loading}
           >
             {loading ? 'Searching...' : 'Search'}
@@ -289,12 +287,12 @@ const TradePage = () => {
 
       {/* Selected Stock Info and Trade Form */}
       {selectedStock && (
-        <div className="p-6 bg-background-light rounded-lg shadow-md border border-border-dark">
-          <h3 className="text-xl font-semibold text-primary mb-4">
-            {selectedStock.name} (<span className="text-secondary">{selectedStock.symbol}</span>)
+        <div className="p-6 bg-gray-700 rounded-lg shadow-md border border-gray-600"> {/* Replaced bg-background-light and border-border-dark with gray shades */}
+          <h3 className="text-xl font-semibold text-[#4ade80] mb-4"> {/* Replaced text-primary with text-[#4ade80] */}
+            {selectedStock.name} (<span className="text-[#3b82f6]">{selectedStock.symbol}</span>) {/* Replaced text-secondary with text-[#3b82f6] */}
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-text-dark_secondary">
-            <p className="text-lg">Current Price: <span className="font-bold text-text-dark">${selectedStock.currentPrice.toFixed(2)}</span></p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-gray-400"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
+            <p className="text-lg">Current Price: <span className="font-bold text-gray-200">${selectedStock.currentPrice.toFixed(2)}</span></p> {/* Replaced text-text-dark with text-gray-200 */}
             <p className="text-sm">Last Updated: {new Date(selectedStock.lastUpdated).toLocaleString()}</p>
             {/* Add more stock details here if available from DTO */}
           </div>
@@ -303,7 +301,7 @@ const TradePage = () => {
             <input
               type="number"
               placeholder="Quantity"
-              className="w-full sm:w-1/3 px-4 py-2 rounded-md border border-border-dark bg-gray-700 text-text-dark focus:outline-none focus:ring-primary-dark focus:border-primary-dark transition duration-200"
+              className="w-full sm:w-1/3 px-4 py-2 rounded-md border border-gray-600 bg-gray-700 text-gray-200 focus:outline-none focus:ring-[#22c55e] focus:border-[#22c55e] transition duration-200"
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
               min="1"
@@ -311,14 +309,14 @@ const TradePage = () => {
             />
             <button
               onClick={handleBuy}
-              className="flex-1 py-2 px-4 bg-success-green text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-success-green shadow-md transition duration-200"
+              className="flex-1 py-2 px-4 bg-[#22c55e] text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#22c55e] shadow-md transition duration-200" 
               disabled={loading || !quantity || quantity <= 0}
             >
               {loading ? 'Buying...' : 'Buy'}
             </button>
             <button
               onClick={handleSell}
-              className="flex-1 py-2 px-4 bg-error-red text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-error-red shadow-md transition duration-200"
+              className="flex-1 py-2 px-4 bg-[#ef4444] text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ef4444] shadow-md transition duration-200" 
               disabled={loading || !quantity || quantity <= 0}
             >
               {loading ? 'Selling...' : 'Sell'}
@@ -331,7 +329,6 @@ const TradePage = () => {
 };
 
 export default TradePage;
-
 
 
 // // src/pages/TradePage.jsx

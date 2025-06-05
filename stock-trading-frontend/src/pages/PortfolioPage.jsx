@@ -256,18 +256,19 @@ const PortfolioPage = () => {
   };
 
   return (
-    <div className="p-6 bg-background-dark_lighter rounded-lg shadow-lg">
-      <h2 className="text-3xl font-bold text-primary mb-6 text-center">
+    // Replaced 'bg-background-dark_lighter' with 'bg-gray-800' directly
+    <div className="p-6 bg-gray-800 rounded-lg shadow-lg">
+      <h2 className="text-3xl font-bold text-[#4ade80] mb-6 text-center"> {/* Replaced text-primary with text-[#4ade80] */}
         My Portfolio
       </h2>
 
       {message && (
-        <div className={`p-3 rounded-md mb-4 text-center ${message.includes('Error') || message.includes('failed') ? 'bg-error-red' : 'bg-success-green'} text-white`}>
+        <div className={`p-3 rounded-md mb-4 text-center ${message.includes('Error') || message.includes('failed') ? 'bg-[#ef4444]' : 'bg-[#22c55e]'} text-white`}> {/* Replaced bg-error-red and bg-success-green with hex codes */}
           {message}
         </div>
       )}
 
-      <div className="text-center text-text-dark_secondary mb-4">
+      <div className="text-center text-gray-400 mb-4"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
         WebSocket Status: <span className={`font-semibold ${wsStatus === 'Connected' ? 'text-green-500' : 'text-yellow-500'}`}>
           {wsStatus}
         </span>
@@ -276,83 +277,83 @@ const PortfolioPage = () => {
       {portfolio ? (
         <>
           {/* Portfolio Summary */}
-          <div className="mb-8 p-6 bg-background-light rounded-lg shadow-md border border-border-dark grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="mb-8 p-6 bg-gray-700 rounded-lg shadow-md border border-gray-600 grid grid-cols-1 md:grid-cols-3 gap-4"> {/* Replaced bg-background-light and border-border-dark with gray shades */}
             <div>
-              <h3 className="text-xl font-semibold text-primary mb-2">Cash Balance</h3>
+              <h3 className="text-xl font-semibold text-[#4ade80] mb-2">Cash Balance</h3> {/* Replaced text-primary with text-[#4ade80] */}
               {/* DEBUG LOG: Check the type and value right before rendering */}
               {console.log("DEBUG: portfolio.cashBalance (initial):", typeof portfolio.cashBalance, portfolio.cashBalance)}
               {console.log("DEBUG: portfolio.cashBalance.round(2):", typeof portfolio.cashBalance.round(2), portfolio.cashBalance.round(2))}
               {/* FIX: Use parseFloat and toFixed on the .value property */}
-              <p className="text-3xl font-bold text-text-dark">${parseFloat(portfolio.cashBalance.value).toFixed(2)}</p>
+              <p className="text-3xl font-bold text-gray-200">${parseFloat(portfolio.cashBalance.value).toFixed(2)}</p> {/* Replaced text-text-dark with text-gray-200 */}
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-primary mb-2">Total Holdings Value</h3>
-              <p className="text-3xl font-bold text-text-dark">
+              <h3 className="text-xl font-semibold text-[#4ade80] mb-2">Total Holdings Value</h3> {/* Replaced text-primary with text-[#4ade80] */}
+              <p className="text-3xl font-bold text-gray-200"> {/* Replaced text-text-dark with text-gray-200 */}
                 {/* Dynamically calculate total holdings value */}
                 {/* FIX: Use parseFloat and toFixed on the .value property */}
                 ${parseFloat(portfolio.holdings.reduce((sum, h) => sum.add(h.currentPrice.multiply(new BigDecimal(h.quantity.toString()))), new BigDecimal('0')).value).toFixed(2)}
               </p>
             </div>
             <div>
-              <h3 className="xl font-semibold text-primary mb-2">Total Portfolio Value</h3>
+              <h3 className="xl font-semibold text-[#4ade80] mb-2">Total Portfolio Value</h3> {/* Replaced text-primary with text-[#4ade80] */}
               {/* FIX: Use parseFloat and toFixed on the .value property */}
-              <p className="text-3xl font-bold text-text-dark">${parseFloat(totalPortfolioValue.value).toFixed(2)}</p>
+              <p className="text-3xl font-bold text-gray-200">${parseFloat(totalPortfolioValue.value).toFixed(2)}</p> {/* Replaced text-text-dark with text-gray-200 */}
             </div>
           </div>
 
           {/* Current Holdings */}
-          <div className="mb-8 p-6 bg-background-light rounded-lg shadow-md border border-border-dark">
-            <h3 className="text-xl font-semibold text-primary mb-4">Current Holdings</h3>
+          <div className="mb-8 p-6 bg-gray-700 rounded-lg shadow-md border border-gray-600"> {/* Replaced bg-background-light and border-border-dark with gray shades */}
+            <h3 className="text-xl font-semibold text-[#4ade80] mb-4">Current Holdings</h3> {/* Replaced text-primary with text-[#4ade80] */}
             {portfolio.holdings.length > 0 ? (
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-border-dark">
+                <table className="min-w-full divide-y divide-gray-600"> {/* Replaced divide-border-dark with divide-gray-600 */}
                   <thead className="bg-gray-700">
                     <tr>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-dark_secondary uppercase tracking-wider rounded-tl-md">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider rounded-tl-md"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
                         Symbol
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-dark_secondary uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
                         Quantity
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-dark_secondary uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
                         Avg. Buy Price
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-dark_secondary uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
                         Current Price
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-dark_secondary uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
                         Total Value
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-dark_secondary uppercase tracking-wider rounded-tr-md">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider rounded-tr-md"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
                         Unrealized P&L
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-background-light divide-y divide-border-dark">
+                  <tbody className="bg-gray-700 divide-y divide-gray-600"> {/* Replaced bg-background-light and divide-border-dark with gray shades */}
                     {portfolio.holdings.map((holding) => (
-                      <tr key={holding.symbol} className="hover:bg-gray-700 transition-colors duration-150">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-primary-dark">
+                      <tr key={holding.symbol} className="hover:bg-gray-600 transition-colors duration-150"> {/* Changed hover:bg-gray-700 to hover:bg-gray-600 for contrast */}
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#4ade80]"> {/* Replaced text-primary-dark with text-[#4ade80] */}
                           {holding.symbol}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-text-dark">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200"> {/* Replaced text-text-dark with text-gray-200 */}
                           {holding.quantity}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-text-dark">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200"> {/* Replaced text-text-dark with text-gray-200 */}
                           {/* FIX: Use parseFloat and toFixed on the .value property */}
                           ${parseFloat(holding.averageBuyPrice.value).toFixed(2)}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-text-dark">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200"> {/* Replaced text-text-dark with text-gray-200 */}
                           {/* FIX: Use parseFloat and toFixed on the .value property */}
                           ${parseFloat(holding.currentPrice.value).toFixed(2)}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-text-dark">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200"> {/* Replaced text-text-dark with text-gray-200 */}
                           {/* FIX: Use parseFloat and toFixed on the .value property */}
                           ${parseFloat(holding.currentPrice.multiply(new BigDecimal(holding.quantity.toString())).value).toFixed(2)}
                         </td>
                         <td className={`px-6 py-4 whitespace-nowrap text-sm font-semibold ${
-                          calculateUnrealizedPnL(holding).compareTo(new BigDecimal('0')) > 0 ? 'text-success-green' :
-                          calculateUnrealizedPnL(holding).compareTo(new BigDecimal('0')) < 0 ? 'text-error-red' :
-                          'text-text-dark_secondary'
+                          calculateUnrealizedPnL(holding).compareTo(new BigDecimal('0')) > 0 ? 'text-[#22c55e]' : // Replaced text-success-green with hex code
+                          calculateUnrealizedPnL(holding).compareTo(new BigDecimal('0')) < 0 ? 'text-[#ef4444]' : // Replaced text-error-red with hex code
+                          'text-gray-400' // Replaced text-text-dark_secondary with text-gray-400
                         }`}>
                           {/* FIX: Use parseFloat and toFixed on the .value property */}
                           ${parseFloat(calculateUnrealizedPnL(holding).value).toFixed(2)} ({parseFloat(calculateUnrealizedPnLPercent(holding).value).toFixed(2)}%)
@@ -363,58 +364,58 @@ const PortfolioPage = () => {
                 </table>
               </div>
             ) : (
-              <p className="text-text-dark_secondary text-center py-4">No holdings in your portfolio yet.</p>
+              <p className="text-gray-400 text-center py-4">No holdings in your portfolio yet.</p> // Replaced text-text-dark_secondary with text-gray-400
             )}
           </div>
 
           {/* Transaction History */}
-          <div className="p-6 bg-background-light rounded-lg shadow-md border border-border-dark">
-            <h3 className="text-xl font-semibold text-primary mb-4">Transaction History</h3>
+          <div className="p-6 bg-gray-700 rounded-lg shadow-md border border-gray-600"> {/* Replaced bg-background-light and border-border-dark with gray shades */}
+            <h3 className="text-xl font-semibold text-[#4ade80] mb-4">Transaction History</h3> {/* Replaced text-primary with text-[#4ade80] */}
             {transactions.length > 0 ? (
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-border-dark">
+                <table className="min-w-full divide-y divide-gray-600"> {/* Replaced divide-border-dark with divide-gray-600 */}
                   <thead className="bg-gray-700">
                     <tr>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-dark_secondary uppercase tracking-wider rounded-tl-md">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider rounded-tl-md"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
                         Date
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-dark_secondary uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
                         Type
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-dark_secondary uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
                         Symbol
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-dark_secondary uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
                         Quantity
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-dark_secondary uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
                         Price/Share
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-dark_secondary uppercase tracking-wider rounded-tr-md">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider rounded-tr-md"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
                         Total Amount
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-background-light divide-y divide-border-dark">
+                  <tbody className="bg-gray-700 divide-y divide-gray-600"> {/* Replaced bg-background-light and divide-border-dark with gray shades */}
                     {transactions.map((tx) => (
-                      <tr key={tx.id} className="hover:bg-gray-700 transition-colors duration-150">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-text-dark_secondary">
+                      <tr key={tx.id} className="hover:bg-gray-600 transition-colors duration-150"> {/* Changed hover:bg-gray-700 to hover:bg-gray-600 for contrast */}
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
                           {new Date(tx.transactionTime).toLocaleString()}
                         </td>
-                        <td className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${tx.transactionType === 'BUY' ? 'text-success-green' : 'text-error-red'}`}>
+                        <td className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${tx.transactionType === 'BUY' ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}> {/* Replaced text-success-green and text-error-red with hex codes */}
                           {tx.transactionType}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-primary-dark">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#4ade80]"> {/* Replaced text-primary-dark with text-[#4ade80] */}
                           {tx.stockSymbol}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-text-dark">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200"> {/* Replaced text-text-dark with text-gray-200 */}
                           {tx.quantity}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-text-dark">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200"> {/* Replaced text-text-dark with text-gray-200 */}
                           {/* FIX: Use parseFloat and toFixed on the .value property */}
                           ${parseFloat(tx.pricePerShare.value).toFixed(2)}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-text-dark">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200"> {/* Replaced text-text-dark with text-gray-200 */}
                           {/* FIX: Use parseFloat and toFixed on the .value property */}
                           ${parseFloat(tx.totalAmount.value).toFixed(2)}
                         </td>
@@ -424,12 +425,12 @@ const PortfolioPage = () => {
                 </table>
               </div>
             ) : (
-              <p className="text-text-dark_secondary text-center py-4">No transactions recorded yet.</p>
+              <p className="text-gray-400 text-center py-4">No transactions recorded yet.</p> // Replaced text-text-dark_secondary with text-gray-400
             )}
           </div>
         </>
       ) : (
-        <p className="text-text-dark_secondary text-center py-8">Loading portfolio data...</p>
+        <p className="text-gray-400 text-center py-8">Loading portfolio data...</p> // Replaced text-text-dark_secondary with text-gray-400
       )}
     </div>
   );

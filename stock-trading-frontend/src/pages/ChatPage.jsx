@@ -80,6 +80,7 @@ const ChatPage = () => {
             if (isMounted.current) {
               setMessages(prevMessages => {
                 // Prevent duplicate messages if the same message is sometimes received twice (e.g., during reconnects)
+                // A simple check by ID, assuming IDs are unique and stable.
                 if (receivedMessage.id && prevMessages.some(msg => msg.id === receivedMessage.id)) {
                   console.log("Duplicate message received (ID:", receivedMessage.id, "). Skipping.");
                   return prevMessages;
@@ -260,22 +261,55 @@ const ChatPage = () => {
       </div>
 
       {/* Message Display Area */}
-      <div className="flex-grow overflow-y-auto p-4 rounded-lg mb-4 custom-scrollbar"
+      <div className="flex-grow overflow-y-auto p-4 rounded-lg mb-4 space-y-3 custom-scrollbar"
         style={{ backgroundColor: '#1F2937', border: '1px solid #4B5563' }}> {/* background-dark, border-dark */}
         {messages.length > 0 ? (
-          messages.map((msg) => ( // Removed 'index' from here
-            <div key={msg.id} className="mb-2"> {/* ONLY use msg.id as key */}
-              <span className="font-semibold mr-2" style={{ color: '#4F46E5' }}> {/* primary-dark */}
-                {msg.senderUsername === currentUser?.username ? 'You' : msg.senderUsername}:
-              </span>
-              <span style={{ color: '#F9FAFB' }}>{msg.messageText}</span> {/* text-dark */}
-              <span className="text-xs ml-2" style={{ color: '#D1D5DB' }}> {/* text-dark_secondary */}
-                {new Date(msg.timestamp).toLocaleTimeString()}
-              </span>
-            </div>
-          ))
+          messages.map((msg) => {
+            const isSender = msg.senderUsername === currentUser?.username;
+            const isSystemMessage = msg.senderUsername === 'System';
+
+            let messageBubbleClasses = "p-3 rounded-lg max-w-[70%] relative break-words";
+            let senderNameClasses = "font-semibold text-sm mr-2";
+            let messageTextClasses = "text-base";
+            let timestampClasses = "text-xs absolute bottom-1";
+
+            if (isSender) {
+              messageBubbleClasses += " bg-blue-600 text-white self-end rounded-br-none ml-auto pl-4 pr-16"; // Blue for sender, adjusted padding for timestamp
+              senderNameClasses += " text-blue-200";
+              timestampClasses += " right-2 text-blue-200"; // Position timestamp on the right
+            } else if (isSystemMessage) {
+              messageBubbleClasses += " bg-gray-700 text-gray-200 text-center mx-auto text-sm italic py-2 px-4"; // Gray for system, smaller font, italic
+              senderNameClasses += " text-gray-400"; // This won't be used, but kept for consistency
+              messageTextClasses = "text-sm"; // System message content smaller
+              timestampClasses = "hidden"; // Hide timestamp for system messages if preferred
+            } else {
+              messageBubbleClasses += " bg-gray-600 text-white self-start rounded-bl-none mr-auto pl-4 pr-16"; // Gray for others, adjusted padding
+              senderNameClasses += " text-purple-200";
+              timestampClasses += " right-2 text-purple-200"; // Position timestamp on the right
+            }
+
+            return (
+              <div key={msg.id} className={`flex ${isSender ? 'justify-end' : 'justify-start'} ${isSystemMessage ? 'justify-center' : ''}`}>
+                <div className={messageBubbleClasses}>
+                  {!isSystemMessage && (
+                    <div className="mb-1">
+                      <span className={senderNameClasses}>
+                        {isSender ? 'You' : msg.senderUsername}
+                      </span>
+                    </div>
+                  )}
+                  <p className={messageTextClasses}>{msg.messageText}</p>
+                  {!isSystemMessage && ( // Only show timestamp for non-system messages
+                    <span className={timestampClasses}>
+                      {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </span>
+                  )}
+                </div>
+              </div>
+            );
+          })
         ) : (
-          <p className="text-center" style={{ color: '#D1D5DB' }}>No messages yet. Start the conversation!</p>
+          <p className="text-center text-gray-400">No messages yet. Start the conversation!</p>
         )}
         <div ref={messagesEndRef} /> {/* Scroll to this element */}
       </div>
@@ -285,7 +319,7 @@ const ChatPage = () => {
         <input
           type="text"
           placeholder="Type your message..."
-          className="flex-grow px-4 py-2 rounded-md shadow-sm transition duration-200"
+          className="flex-grow px-4 py-2 rounded-md shadow-sm transition duration-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           style={{ border: '1px solid #4B5563', backgroundColor: '#374151', color: '#F9FAFB', outline: 'none' }} /* border-dark, background-light, text-dark */
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
@@ -293,7 +327,7 @@ const ChatPage = () => {
         />
         <button
           type="submit"
-          className="px-6 py-2 text-white rounded-md shadow-md transition duration-200"
+          className="px-6 py-2 text-white rounded-md shadow-md transition duration-200 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
           style={{ backgroundColor: '#6366F1' }} /* primary */
           disabled={stompStatus !== 'connected' || newMessage.trim() === ''} // Disable if not connected or message is empty
         >

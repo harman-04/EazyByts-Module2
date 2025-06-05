@@ -61,3 +61,84 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #6B7280; /* Gray 500 */
 }
+
+/* src/index.css or a dedicated animations.css file */
+
+/* Keyframes for fade-in-down animation */
+@keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Keyframes for fade-in-up animation */
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Keyframes for slide-in-left animation */
+@keyframes slide-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Keyframes for slide-in-right animation */
+@keyframes slide-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animation classes */
+.animate-fade-in-down {
+  animation: fade-in-down 0.8s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.8s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.8s ease-out forwards;
+}
+
+/* To handle delays, you can either:
+   1. Create specific classes for each delay (e.g., .delay-200ms)
+   2. Use inline styles for delays if only a few instances: animation-delay: 0.2s;
+   3. Configure Tailwind's safelist for arbitrary values if you still want to use `delay-200` directly.
+
+   For simplicity with direct CSS, you'd apply the delay like this:
+*/
+.animate-fade-in-up.delay-200 {
+  animation-delay: 0.2s;
+}
+
+/* If you need more granular control over delays, you might create more specific classes */
+/* .animate-fade-in-up.delay-400 { animation-delay: 0.4s; } */

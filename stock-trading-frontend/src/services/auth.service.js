@@ -2,9 +2,9 @@
 import axios from 'axios';
 
 // Base URL for your Spring Boot backend authentication endpoints
-const AUTH_API_URL = 'http://localhost:8080/api/auth/'; // Renamed API_URL for clarity
+const AUTH_API_URL = 'http://localhost:8080/api/auth/';
 // Base URL for your Spring Boot backend user endpoints
-const USER_API_URL = 'http://localhost:8080/api/user/'; // NEW: for user profile endpoint
+const USER_API_URL = 'http://localhost:8080/api/user/';
 
 /**
  * Helper function to get the authorization header for authenticated requests.
@@ -81,15 +81,47 @@ const getCurrentUser = () => {
  * @returns {Promise} - A promise resolving with the user's profile object.
  */
 const getUserProfile = () => {
-  return axios.get(USER_API_URL + 'profile', { headers: authHeader() }); // NEW function
+  return axios.get(USER_API_URL + 'profile', { headers: authHeader() });
 };
+
+/**
+ * Updates the user's email address.
+ * @param {string} newEmail - The new email address.
+ * @param {string} currentPassword - The user's current password for verification.
+ * @returns {Promise} - A promise resolving with a success message.
+ */
+const updateEmail = (newEmail, currentPassword) => {
+  return axios.put(
+    USER_API_URL + 'profile/email',
+    { newEmail, currentPassword },
+    { headers: authHeader() }
+  );
+};
+
+/**
+ * Changes the user's password.
+ * @param {string} currentPassword - The user's current password.
+ * @param {string} newPassword - The new password.
+ * @param {string} confirmNewPassword - Confirmation of the new password.
+ * @returns {Promise} - A promise resolving with a success message.
+ */
+const changePassword = (currentPassword, newPassword, confirmNewPassword) => {
+  return axios.put(
+    USER_API_URL + 'profile/password',
+    { currentPassword, newPassword, confirmNewPassword },
+    { headers: authHeader() }
+  );
+};
+
 
 const authService = {
   register,
   login,
   logout,
   getCurrentUser,
-  getUserProfile, // NEW: Export the new function
+  getUserProfile,
+  updateEmail,      // Export new function
+  changePassword,   // Export new function
 };
 
 export default authService;

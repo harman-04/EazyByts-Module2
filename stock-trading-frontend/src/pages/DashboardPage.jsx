@@ -4,6 +4,7 @@ import stockService from '../services/stock.service'; // Service for fetching st
 import SockJS from 'sockjs-client'; // For WebSocket connection
 import Stomp from 'stompjs'; // STOMP client for WebSocket messaging
 import authService from '../services/auth.service'; // Import authService to get current user/token
+import { Link } from 'react-router-dom';
 
 /**
  * DashboardPage component.
@@ -180,18 +181,18 @@ const DashboardPage = () => {
   }, []); // Empty dependency array means this runs once on mount/re-mount in Strict Mode
 
   return (
-    <div className="p-6 bg-background-dark_lighter rounded-lg shadow-lg">
-      <h2 className="text-3xl font-bold text-primary mb-6 text-center">
+    <div className="p-6 bg-gray-800 rounded-lg shadow-lg"> {/* Replaced bg-background-dark_lighter with bg-gray-800 */}
+      <h2 className="text-3xl font-bold text-[#4ade80] mb-6 text-center"> {/* Replaced text-primary with text-[#4ade80] */}
         Dashboard Overview
       </h2>
 
       {message && (
-        <div className="bg-error-red text-white p-3 rounded-md mb-4 text-center">
+        <div className="bg-[#ef4444] text-white p-3 rounded-md mb-4 text-center"> {/* Replaced bg-error-red with bg-[#ef4444] */}
           {message}
         </div>
       )}
 
-      <div className="text-center text-text-dark_secondary mb-4">
+      <div className="text-center text-gray-400 mb-4"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
         WebSocket Status: <span className={`font-semibold ${wsStatus === 'Connected' ? 'text-green-500' : 'text-yellow-500'}`}>
           {wsStatus}
         </span>
@@ -199,51 +200,53 @@ const DashboardPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Example Card: Portfolio Summary (Placeholder for future) */}
-        <div className="bg-background-light p-6 rounded-lg shadow-md border border-border-dark">
-          <h3 className="text-xl font-semibold text-primary mb-3">Portfolio Summary</h3>
-          <p className="text-text-dark_secondary">Cash Balance: $100,000.00</p>
-          <p className="text-text-dark_secondary">Total Value: $100,000.00</p>
-          <p className="text-text-dark_secondary">Today's P&L: +$0.00</p>
-          <button className="mt-4 w-full py-2 px-4 bg-primary text-white rounded-md hover:bg-primary-dark transition duration-200">
+        <div className="bg-gray-700 p-6 rounded-lg shadow-md border border-gray-600"> {/* Replaced bg-background-light with bg-gray-700, border-border-dark with border-gray-600 */}
+          <h3 className="text-xl font-semibold text-[#4ade80] mb-3">Portfolio Summary</h3> {/* Replaced text-primary with text-[#4ade80] */}
+          <p className="text-gray-400">Cash Balance: $100,000.00</p> {/* Replaced text-text-dark_secondary with text-gray-400 */}
+          <p className="text-gray-400">Total Value: $100,000.00</p> {/* Replaced text-text-dark_secondary with text-gray-400 */}
+          <p className="text-gray-400">Today's P&L: +$0.00</p> {/* Replaced text-text-dark_secondary with text-gray-400 */}
+          <Link to="/portfolio">
+          <button className="mt-4 w-full py-2 px-4 bg-[#4ade80] text-white rounded-md hover:bg-[#22c55e] transition duration-200"> {/* Replaced bg-primary with bg-[#4ade80], hover:bg-primary-dark with hover:bg-[#22c55e] */}
             View Portfolio
           </button>
+          </Link>
         </div>
 
         {/* Available Stocks Section */}
-        <div className="lg:col-span-2 bg-background-light p-6 rounded-lg shadow-md border border-border-dark">
-          <h3 className="text-xl font-semibold text-primary mb-4">Available Stocks</h3>
+        <div className="lg:col-span-2 bg-gray-700 p-6 rounded-lg shadow-md border border-gray-600"> {/* Replaced bg-background-light with bg-gray-700, border-border-dark with border-gray-600 */}
+          <h3 className="text-xl font-semibold text-[#4ade80] mb-4">Available Stocks</h3> {/* Replaced text-primary with text-[#4ade80] */}
           {stocks.length > 0 ? (
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-border-dark">
+              <table className="min-w-full divide-y divide-gray-600"> {/* Replaced divide-border-dark with divide-gray-600 */}
                 <thead className="bg-gray-700">
                   <tr>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-dark_secondary uppercase tracking-wider rounded-tl-md">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider rounded-tl-md"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
                       Symbol
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-dark_secondary uppercase tracking-wider">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
                       Name
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-dark_secondary uppercase tracking-wider">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
                       Current Price
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-dark_secondary uppercase tracking-wider rounded-tr-md">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider rounded-tr-md"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
                       Last Updated
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-background-light divide-y divide-border-dark">
+                <tbody className="bg-gray-700 divide-y divide-gray-600"> {/* Replaced bg-background-light with bg-gray-700, divide-border-dark with divide-gray-600 */}
                   {stocks.map((stock) => (
-                    <tr key={stock.id} className="hover:bg-gray-700 transition-colors duration-150">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-primary-dark">
+                    <tr key={stock.id} className="hover:bg-gray-600 transition-colors duration-150"> {/* Hover color adjusted for visibility */}
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#22c55e]"> {/* Replaced text-primary-dark with text-[#22c55e] */}
                         {stock.symbol}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-text-dark">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200"> {/* Replaced text-text-dark with text-gray-200 */}
                         {stock.name}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-text-dark">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200"> {/* Replaced text-text-dark with text-gray-200 */}
                         ${stock.currentPrice ? stock.currentPrice.toFixed(2) : 'N/A'}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-text-dark_secondary">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400"> {/* Replaced text-text-dark_secondary with text-gray-400 */}
                         {stock.lastUpdated ? new Date(stock.lastUpdated).toLocaleString() : 'N/A'}
                       </td>
                     </tr>
@@ -252,7 +255,7 @@ const DashboardPage = () => {
               </table>
             </div>
           ) : (
-            <p className="text-text-dark_secondary">Loading stocks or no stocks available...</p>
+            <p className="text-gray-400">Loading stocks or no stocks available...</p> 
           )}
         </div>
       </div>
